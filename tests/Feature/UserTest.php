@@ -16,7 +16,8 @@ class UserTest extends TestCase
     public function test_user_can_register()
     {
         $response = $this->postJson('/api/register', [
-            'name' => 'Josh',
+            'first_name' => 'Josh',
+            'last_name' => 'Josh',
             'email' => 'jj@gmail.com',
             'password' => 'password',
             'c_password' => 'password'

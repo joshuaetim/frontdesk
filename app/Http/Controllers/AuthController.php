@@ -13,10 +13,11 @@ class AuthController extends APIController
     // register
     public function register(Request $request)
     {
-        $input = $request->only('name', 'email', 'password', 'c_password');
+        $input = $request->only('first_name', 'last_name', 'email', 'password', 'c_password');
 
         $validator = Validator::make($input, [
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'c_password' => 'required|same:password',
