@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,12 @@ Route::get('/home', [HomeController::class, 'home']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+Route::post('/recover-password', [ResetPasswordController::class, 'sendMail']);
+
+Route::post('/recover-password/verify', [ResetPasswordController::class, 'verifyToken']);
+
+Route::post('/recover-password/reset', [ResetPasswordController::class, 'resetPassword']);
+
 Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::get('/staff', [StaffController::class, 'index']);
@@ -40,6 +48,23 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy']);
     
     Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::prefix('admin')->group(function() {
+
+    Route::prefix('/users')->group(function(){
+
+        Route::get('/', [UserController::class, 'getAllUsers']);
+
+        Route::get('/{user}', [UserController::class, 'getUser']);
+
+        Route::post('/{user}/status', [UserController::class, 'changeUserStatus']);
+
+        Route::put('/{user}', [UserController::class, 'updateUser']);
+
+        Route::delete('/{user}', [UserController::class, 'deleteUser']);
+
+    });
 });
 
 Route::get('/redis', [HomeController::class, 'redis']);

@@ -32,6 +32,7 @@ class StaffFactory extends Factory
             'salary' => $this->faker->randomFloat(2, 1000, 500000),
             'start_date' => $this->faker->date(),
             'status' => 'active',
+            'user_id' => 1
         ];
     }
 }

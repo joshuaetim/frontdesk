@@ -106,28 +106,13 @@ class StaffTest extends TestCase
         );
 
         // create staff
-        $response = $this->postJson('/api/staff', [
-            'name' => 'Staff',
-            'position' => 'Manager',
-            'salary' => 45030.67,
-            'status' => 'active',
-            'email' => 'email@example.com',
-            'phone' => '+234838382882',
-            'address' => '45, fff street',
-            'start_date' => '2019-12-12'
-        ]);
-
-        // $response->dump();
-
-        $id = $response['data']['id'];
-
-        $response->assertStatus(201);
-        $this->assertCount(1, Staff::all());
-
+        $staff = Staff::factory()->state([
+            'user_id' => $user->id
+        ])->create();
         
         // update staff
 
-        $response = $this->putJson('/api/staff/'.$id, [
+        $response = $this->putJson('/api/staff/'.$staff->id, [
             'name' => 'Staff-Updated',
             'position' => 'Manager',
             'salary' => 45030.67,
@@ -141,7 +126,7 @@ class StaffTest extends TestCase
         // $response->dump();
         // $newName = $response['data']['name'];
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
                 ->assertJsonPath('data.name', 'Staff-Updated');
     }
 
@@ -155,27 +140,12 @@ class StaffTest extends TestCase
         );
 
         // create staff
-        $response = $this->postJson('/api/staff', [
-            'name' => 'Staff',
-            'position' => 'Manager',
-            'salary' => 45030.67,
-            'status' => 'active',
-            'email' => 'email@example.com',
-            'phone' => '+234838382882',
-            'address' => '45, fff street',
-            'start_date' => '2019-12-12'
-        ]);
-
-        // $response->dump();
-
-        $id = $response['data']['id'];
-
-        $response->assertStatus(201);
-        $this->assertCount(1, Staff::all());
-
+        $staff = Staff::factory()->state([
+            'user_id' => $user->id
+        ])->create();
 
         // delete staff
-        $response = $this->deleteJson('/api/staff/'.$id);
+        $response = $this->deleteJson('/api/staff/'.$staff->id);
 
         $response->assertStatus(200);
         $this->assertCount(0, Staff::all());

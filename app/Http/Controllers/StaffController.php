@@ -145,7 +145,7 @@ class StaffController extends APIController
 
         $staff->refresh();
 
-        return $this->sendResponse($staff, 'Staff Updated', 201);
+        return $this->sendResponse($staff, 'Staff Updated', 200);
     }
 
     /**
