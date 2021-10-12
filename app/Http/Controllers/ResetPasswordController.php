@@ -29,7 +29,7 @@ class ResetPasswordController extends APIController
         }
 
         // new code to authenticate
-        $user->remember_token = Str::random(6);
+        $user->remember_token = random_int(100000, 999999);
         $user->save();
         // $user->refresh();
 
