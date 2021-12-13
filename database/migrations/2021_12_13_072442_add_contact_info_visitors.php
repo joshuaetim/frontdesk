@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLastnameToUsers extends Migration
+class AddContactInfoVisitors extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddLastnameToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('last_name')->nullable();
+        Schema::table('visitors', function (Blueprint $table) {
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ class AddLastnameToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            // $table->dropColumn('last_name');
+        Schema::table('visitors', function (Blueprint $table) {
+            $table->dropColumn('email');
+            $table->dropColumn('phone');
         });
     }
 }

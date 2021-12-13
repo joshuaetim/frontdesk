@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany("App\Models\Staff");
     }
 
+    public function visitors()
+    {
+        return $this->hasMany("App\Models\Visitor");
+    }
+
     // public static function findOrSendError(int $user)
     // {
     //     $user = self::find($user);

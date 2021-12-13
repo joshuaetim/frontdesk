@@ -17,4 +17,9 @@ class Staff extends Model
     {
         return $this->belongsTo("App\Models\User");
     }
+
+    public function visitors()
+    {
+        return $this->hasMany("App\Models\Visitor");
+    }
 }

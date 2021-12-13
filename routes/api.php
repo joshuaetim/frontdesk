@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\VisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,20 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy']);
     
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::prefix('visitors')->group(function(){
+
+        Route::get('/', [VisitorController::class, 'index']);
+
+        Route::get('/{visitor}', [VisitorController::class, 'show']);
+
+        Route::post('/', [VisitorController::class, 'store']);
+
+        Route::put('/{visitor}', [VisitorController::class, 'update']);
+
+        Route::delete('/{visitor}', [VisitorController::class, 'destroy']);
+
+    });
 });
 
 Route::prefix('admin')->group(function() {
