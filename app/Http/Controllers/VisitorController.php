@@ -155,6 +155,5 @@ class VisitorController extends APIController
                             ])
                             ->create();
         return $visitors;
-
     }
 }
