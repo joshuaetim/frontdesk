@@ -167,4 +167,21 @@ class StaffController extends APIController
 
         return $this->sendResponse([], 'Staff Deleted');
     }
+
+    /**
+     * Add Staff
+     * @param Request $request
+     */
+    public function populate(Request $request)
+    {
+        $count = $request->input('count', 1);
+
+        $staff = Staff::factory()
+                        ->count($count)
+                        ->state([
+                            'user_id' => auth()->id()
+                        ])
+                        ->create();
+        return $staff;
+    }
 }

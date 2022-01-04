@@ -130,4 +130,31 @@ class VisitorController extends APIController
 
         return $this->sendResponse([], 'Visitor deleted');
     }
+
+     /**
+     * Add Visitor
+     * @param Request $request
+     */
+    public function populate(Request $request)
+    {
+        $count = $request->input('count', 1);
+
+        $validator = Validator::make($request->all(), [
+            'staff' => 'required|numeric',
+        ]);
+
+        if($validator->fails()) {
+            return $this->sendError("Validation error", $validator->errors(), 422);
+        }
+
+        $visitors = Visitor::factory()
+                            ->count($count)
+                            ->state([
+                                'user_id' => auth()->id(),
+                                'staff_id' => $request->staff,
+                            ])
+                            ->create();
+        return $visitors;
+
+    }
 }
