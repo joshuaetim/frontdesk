@@ -40,6 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::get('/staff', [StaffController::class, 'index']);
 
+    Route::get('/staff/count', [StaffController::class, 'count']);
+
     Route::get('/staff/populate', [StaffController::class, 'populate']);
 
     Route::get('/staff/{staff}', [StaffController::class, 'show']);
@@ -55,6 +57,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::prefix('visitors')->group(function(){
 
         Route::get('/', [VisitorController::class, 'index']);
+
+        Route::get('/count', [VisitorController::class, 'count']);
 
         Route::get('/populate', [VisitorController::class, 'populate']);
 

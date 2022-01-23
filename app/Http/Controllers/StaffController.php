@@ -184,4 +184,13 @@ class StaffController extends APIController
                         ->create();
         return $staff;
     }
+    
+    /**
+     * Count total number of staff
+     */
+    public function count()
+    {
+        $count = auth()->user()->staff->count();
+        return $this->sendResponse(['count' => $count], "data retrieved");
+    }
 }

@@ -156,4 +156,13 @@ class VisitorController extends APIController
                             ->create();
         return $visitors;
     }
+
+    /**
+     * Count total number of visitors
+     */
+    public function count()
+    {
+        $count = auth()->user()->visitors->count();
+        return $this->sendResponse(['count' => $count], "data retrieved");
+    }
 }
