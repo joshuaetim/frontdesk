@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
+use App\Mail\SendPasswordReset;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -53,5 +55,18 @@ class UserTest extends TestCase
         $response = $this->postJson('/api/logout');
         
         $response->assertStatus(200);
+    }
+
+    public function test_user_can_get_recovery_email()
+    {
+        Mail::fake();
+
+        $user = User::factory()->create();
+
+        $response = $this->postJson('/api/recover-password', [
+            'email' => $user->email,
+        ]);
+
+        Mail::assertQueued(SendPasswordReset::class);
     }
 }

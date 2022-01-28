@@ -5,8 +5,11 @@ namespace Tests\Feature;
 use App\Models\Staff;
 use App\Models\User;
 use App\Models\Visitor;
+use App\Providers\SendVisitorNotification;
+use App\Providers\VisitorLogged;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -34,6 +37,8 @@ class VisitorTest extends TestCase
 
     public function test_user_can_create_visitor()
     {
+        Event::fake();
+
         $user = User::factory()
                     ->has(Staff::factory()->count(1))
                     ->create();
@@ -59,6 +64,13 @@ class VisitorTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertCount(1, Visitor::all());
+
+        Event::assertDispatched(VisitorLogged::class);
+
+        Event::assertListening(
+            VisitorLogged::class,
+            SendVisitorNotification::class
+        );
     }
 
     public function test_user_can_see_single_visitor()

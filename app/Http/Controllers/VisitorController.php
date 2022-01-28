@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitor;
+use App\Providers\VisitorLogged;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,6 +54,9 @@ class VisitorController extends APIController
         }
         
         $visitor = auth()->user()->visitors()->create($input);
+
+        // dispath visitorlogged event
+        VisitorLogged::dispatch($visitor->id, $request->staff_id);
 
         return $this->sendResponse($visitor, 'Visitor logged successfully', 201);
     }
