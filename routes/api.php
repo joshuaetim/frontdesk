@@ -27,6 +27,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/home', [HomeController::class, 'home']);
 
+Route::get('/errors', [HomeController::class, 'errors']);
+
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 

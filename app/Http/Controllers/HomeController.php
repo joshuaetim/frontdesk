@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\APIController;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends APIController
 {
@@ -17,6 +18,18 @@ class HomeController extends APIController
         $message = "You found me!";
 
         return $this->sendResponse($data, $message);
+    }
+
+    public function errors()
+    {
+        $jobs = DB::select("select * from jobs");
+        $failed_jobs = DB::select("select * from failed_jobs");
+
+        $response = [
+            'jobs' => $jobs,
+            'failed_jobs' => $failed_jobs,
+        ];
+        return $response;
     }
 
     public function redis()
